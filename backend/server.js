@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 const path = require('path');
+const fs = require('fs');
 const { initDB } = require('./db');
 
 const app = express();
@@ -30,11 +31,12 @@ app.use('/api/reports', require('./routes/reports'));
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
-// Serve React build in production and fallback in development
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV !== 'development') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
+// Serve React build if it exists
+const buildPath = path.join(__dirname, '../frontend/build');
+if (fs.existsSync(buildPath)) {
+  app.use(express.static(buildPath));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+    res.sendFile(path.join(buildPath, 'index.html'));
   });
 }
 
