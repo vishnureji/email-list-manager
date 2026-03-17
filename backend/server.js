@@ -33,8 +33,8 @@ app.get('/', (req, res) => res.json({ message: 'Email Platform API', status: 'ru
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
-// Serve React build in production
-if (process.env.NODE_ENV === 'production') {
+// Serve React build in production and fallback in development
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV !== 'development') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
