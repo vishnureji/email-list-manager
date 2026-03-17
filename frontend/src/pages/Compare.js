@@ -13,7 +13,6 @@ const MetricRow = ({ label, campaigns, field, suffix = '', color, higher = true 
       {campaigns.map((c, i) => {
         const val = +c[field] || 0;
         const isBest = val === max && max > 0;
-        const isWorst = !isBest && val > 0 && !higher;
         return (
           <td key={i} className="mono" style={{
             color: isBest ? color || 'var(--success)' : 'var(--text-primary)',
