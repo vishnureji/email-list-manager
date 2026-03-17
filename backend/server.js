@@ -27,9 +27,6 @@ app.use('/api/audiences', require('./routes/audiences'));
 app.use('/api/campaigns', require('./routes/campaigns'));
 app.use('/api/reports', require('./routes/reports'));
 
-// Root route
-app.get('/', (req, res) => res.json({ message: 'Email Platform API', status: 'running' }));
-
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
